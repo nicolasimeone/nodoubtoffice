@@ -6,7 +6,6 @@
 <title>No Doubt Office</title>
 
 <style>
-
 @font-face {
     font-family: 'Neue Haas Display';
     src: url('./NeueHaasDisplayMediu.ttf') format('truetype');
@@ -14,47 +13,55 @@
     font-style: normal;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     background: #ffffff;
     color: #111111;
     font-family: 'Neue Haas Display', Helvetica, Arial, sans-serif;
     font-weight: 500;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    letter-spacing: -0.03em;
 }
 
-.content {
-    text-align: center;
+.main {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 40px;
-    max-width: none;
+    text-align: center;
 }
 
 .hero {
-    font-size: 32px;
+    max-width: none;
+    font-size: clamp(42px, 6vw, 90px);
     line-height: 0.95;
-    margin-bottom: 12px;
+    letter-spacing: -0.04em;
 }
 
-.subline {
-    font-size: 32px;
-    line-height: 0.95;
-    margin-bottom: 12px;
+.hero div:first-child {
+    margin-bottom: 18px;
 }
 
 .contact {
+    position: fixed;
+    bottom: 42px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
     font-size: 16px;
-    line-height: 1.5;
+    line-height: 1.45;
+    letter-spacing: -0.01em;
 }
 
 .contact-label {
-    margin-bottom: 10px;
-    opacity: 0.5;
+    opacity: 0.45;
+    margin-bottom: 8px;
 }
 
 a {
@@ -66,37 +73,40 @@ a:hover {
     opacity: 0.5;
 }
 
+@media (max-width: 600px) {
+    .main {
+        padding: 28px;
+    }
+
+    .hero {
+        font-size: 44px;
+        line-height: 0.95;
+    }
+
+    .contact {
+        bottom: 34px;
+        font-size: 15px;
+        width: 100%;
+        padding: 0 28px;
+    }
+}
 </style>
 </head>
 
 <body>
 
-<div class="content">
-
+<main class="main">
     <div class="hero">
-        Creative consulting, design and direction.
+        <div>Creative consulting, design and direction.</div>
+        <div>Currently available for new projects.</div>
     </div>
+</main>
 
-    <div class="subline">
-        Currently available for new projects.
-    </div>
-
-    <div class="contact">
-        <div class="contact-label">
-            Get in touch:
-        </div>
-
-        <a href="mailto:info@nodoubtoffice.com">
-            info@nodoubtoffice.com
-        </a>
-
-        <br>
-
-        <a href="https://instagram.com/nodoubtoffice" target="_blank">
-            @nodoubtoffice
-        </a>
-    </div>
-
+<div class="contact">
+    <div class="contact-label">Get in touch:</div>
+    <a href="mailto:info@nodoubtoffice.com">info@nodoubtoffice.com</a>
+    <br>
+    <a href="https://instagram.com/nodoubtoffice" target="_blank">@nodoubtoffice</a>
 </div>
 
 </body>
