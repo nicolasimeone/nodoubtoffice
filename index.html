@@ -16,7 +16,7 @@
 
 body {
     margin: 0;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -26,18 +26,36 @@ body {
     font-weight: 500;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    letter-spacing: -0.03em;
 }
 
 .content {
     text-align: center;
-    width: fit-content;
     padding: 40px;
+    max-width: 1200px;
 }
 
-p {
-    margin: 0 0 24px 0;
-    line-height: 1.6;
+.hero {
     font-size: 72px;
+    line-height: 1.05;
+    margin-bottom: 50px;
+}
+
+.subline {
+    font-size: 22px;
+    line-height: 1.3;
+    margin-bottom: 50px;
+}
+
+.contact {
+    font-size: 16px;
+    line-height: 1.8;
+    letter-spacing: 0;
+}
+
+.contact-label {
+    margin-bottom: 10px;
+    opacity: 0.5;
 }
 
 a {
@@ -46,7 +64,7 @@ a {
 }
 
 a:hover {
-    opacity: 0.6;
+    opacity: 0.5;
 }
 
 </style>
@@ -56,22 +74,29 @@ a:hover {
 
 <div class="content">
 
-    <p>
-Creative consulting, design and direction.
-    </p>
-Currently available for new projects.
-    </p>
-    Get in touch:
-    </p>
-    <p>
+    <div class="hero">
+        Creative consulting, design and direction.
+    </div>
+
+    <div class="subline">
+        Currently available for new projects.
+    </div>
+
+    <div class="contact">
+        <div class="contact-label">
+            Get in touch:
+        </div>
+
         <a href="mailto:info@nodoubtoffice.com">
             info@nodoubtoffice.com
         </a>
+
         <br>
+
         <a href="https://instagram.com/nodoubtoffice" target="_blank">
             @nodoubtoffice
         </a>
-    </p>
+    </div>
 
 </div>
 
