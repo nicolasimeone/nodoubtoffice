@@ -6,12 +6,10 @@
 <title>Nodoubt Office</title>
 
 <style>
-
 @font-face {
     font-family: 'Neue Haas Display';
     src: url('./NeueHaasDisplayMediu.ttf') format('truetype');
     font-weight: 500;
-    font-style: normal;
 }
 
 * {
@@ -20,77 +18,205 @@
 
 body {
     margin: 0;
-    background: #f5f5f5;
-    color: #111;
+    background: #000;
+    color: #fff;
     font-family: 'Neue Haas Display', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
 }
 
-.hero {
-    padding: 8vw;
-    max-width: 1400px;
-
-    font-size: clamp(48px, 6vw, 96px);
-    line-height: 0.92;
-    letter-spacing: -0.03em;
+.page {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    overflow: hidden;
 }
 
+/* FALLING TEXT AREA */
+.text-wall {
+    position: absolute;
+    top: -70px;
+    left: -20px;
+    width: 120vw;
+    height: 42vh;
+    overflow: hidden;
+}
+
+.column {
+    position: absolute;
+    top: 0;
+    transform: rotate(90deg);
+    transform-origin: top left;
+    white-space: nowrap;
+}
+
+.column:nth-child(1) { left: 2%; top: -40px; }
+.column:nth-child(2) { left: 13%; top: -95px; }
+.column:nth-child(3) { left: 24%; top: -60px; }
+.column:nth-child(4) { left: 35%; top: -120px; }
+.column:nth-child(5) { left: 46%; top: -30px; }
+.column:nth-child(6) { left: 57%; top: -85px; }
+.column:nth-child(7) { left: 68%; top: -50px; }
+.column:nth-child(8) { left: 79%; top: -110px; }
+.column:nth-child(9) { left: 90%; top: -70px; }
+
+.column span {
+    display: inline-block;
+    background: #fff;
+    color: #000;
+
+    font-size: clamp(42px, 6vw, 86px);
+    line-height: 0.78;
+    letter-spacing: -0.07em;
+    font-weight: 500;
+
+    padding: 0 7px 5px 7px;
+}
+
+/* CONTACT */
 .contact {
-    position: fixed;
-    left: 8vw;
-    bottom: 40px;
+    position: absolute;
+    bottom: 38px;
+    left: 42px;
 
-    font-size: 16px;
-    line-height: 1.35;
-    letter-spacing: -0.01em;
+    font-size: 10px;
+    line-height: 1.15;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
 }
 
 .contact a {
-    color: inherit;
+    color: #fff;
     text-decoration: none;
 }
 
-.contact a:hover {
-    opacity: 0.5;
+/* LOGO */
+.footer {
+    position: absolute;
+    right: 42px;
+    bottom: 36px;
+    text-align: left;
 }
 
-@media (max-width: 768px) {
+.logo-line {
+    font-size: clamp(19px, 2.4vw, 34px);
+    line-height: 0.85;
+    letter-spacing: -0.06em;
+    font-weight: 500;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
 
-    .hero {
-        padding: 32px;
-        font-size: 44px;
-        line-height: 0.95;
+.logo-line span {
+    font-size: 1.45em;
+}
+
+.subline {
+    margin-top: 5px;
+    font-size: 8px;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/* MOBILE */
+@media (max-width: 700px) {
+    .text-wall {
+        top: -45px;
+        left: -10px;
+        height: 45vh;
+    }
+
+    .column:nth-child(1) { left: 0%; top: -20px; }
+    .column:nth-child(2) { left: 18%; top: -75px; }
+    .column:nth-child(3) { left: 36%; top: -45px; }
+    .column:nth-child(4) { left: 54%; top: -95px; }
+    .column:nth-child(5) { left: 72%; top: -35px; }
+    .column:nth-child(6) { left: 90%; top: -80px; }
+
+    .column:nth-child(n+7) {
+        display: none;
+    }
+
+    .column span {
+        font-size: 48px;
+        line-height: 0.78;
     }
 
     .contact {
-        left: 32px;
-        bottom: 32px;
-        font-size: 15px;
+        left: 24px;
+        bottom: 28px;
+        font-size: 9px;
+    }
+
+    .footer {
+        right: 24px;
+        bottom: 26px;
+    }
+
+    .logo-line {
+        font-size: 22px;
+    }
+
+    .subline {
+        font-size: 7px;
     }
 }
-
 </style>
 </head>
-    
+
 <body>
 
-<div class="hero">
-    Creative consulting,<br>
-    design and direction.
-    <br><br>
-    Currently available<br>
-    for new projects.
-</div>
+<div class="page">
 
-<div class="contact">
-    <a href="mailto:info@nodoubtoffice.com">
-        info@nodoubtoffice.com
-    </a>
-    <br>
-    <a href="https://instagram.com/nodoubtoffice" target="_blank">
-        @nodoubtoffice
-    </a>
+    <div class="text-wall">
+        <div class="column">
+            <span>creative consulting design direction currently available for new projects</span>
+        </div>
+
+        <div class="column">
+            <span>nodoubt office creative consulting design and direction</span>
+        </div>
+
+        <div class="column">
+            <span>currently available for new projects nodoubt office</span>
+        </div>
+
+        <div class="column">
+            <span>creative direction design consulting nodoubt office</span>
+        </div>
+
+        <div class="column">
+            <span>available for new projects creative consulting</span>
+        </div>
+
+        <div class="column">
+            <span>nodoubt office design direction currently available</span>
+        </div>
+
+        <div class="column">
+            <span>creative consulting design direction currently available</span>
+        </div>
+
+        <div class="column">
+            <span>new projects nodoubt office creative direction</span>
+        </div>
+
+        <div class="column">
+            <span>design consulting direction nodoubt office</span>
+        </div>
+    </div>
+
+    <div class="contact">
+        <a href="mailto:info@nodoubtoffice.com">info@nodoubtoffice.com</a><br>
+        <a href="https://instagram.com/nodoubtoffice">@nodoubtoffice</a>
+    </div>
+
+    <div class="footer">
+        <div class="logo-line">NODOUBT OFFICE <span>STUDIO</span></div>
+        <div class="subline">Creative consulting, design and direction</div>
+    </div>
+
 </div>
 
 </body>
