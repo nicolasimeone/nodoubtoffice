@@ -12,6 +12,11 @@
   box-sizing: border-box;
 }
 
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
 body {
   background: #fff;
   color: #000;
@@ -27,11 +32,16 @@ body {
 }
 
 .services {
-  width: 95vw;
-  font-size: clamp(42px, 4.1vw, 78px);
-  line-height: 0.95;
-  letter-spacing: -0.07em;
+  width: calc(100vw - 76px);
+  max-width: 100%;
+
+  font-size: clamp(38px, 3.8vw, 72px);
+  line-height: 0.92;
+  letter-spacing: -0.075em;
   font-weight: 700;
+
+  overflow-wrap: anywhere;
+  word-break: normal;
 }
 
 .claim {
@@ -40,8 +50,8 @@ body {
   bottom: 27.5vh;
 
   font-size: 14px;
-  line-height: 0.95;
-  letter-spacing: -0.04em;
+  line-height: 0.9;
+  letter-spacing: -0.055em;
   font-weight: 700;
 }
 
@@ -51,8 +61,8 @@ body {
   bottom: 38px;
 
   font-size: 14px;
-  line-height: 0.95;
-  letter-spacing: -0.04em;
+  line-height: 0.9;
+  letter-spacing: -0.055em;
   font-weight: 700;
 }
 
@@ -63,31 +73,30 @@ a {
 
 @media (max-width: 768px) {
   body {
-    overflow: auto;
+    overflow: hidden;
   }
 
   .page {
-    min-height: 100vh;
-    height: auto;
     padding: 22px;
   }
 
   .services {
-    width: 100%;
-    font-size: 42px;
+    width: calc(100vw - 44px);
+    font-size: 34px;
     line-height: 0.9;
+    letter-spacing: -0.075em;
   }
 
   .claim {
-    position: static;
-    margin-top: 35vh;
-    font-size: 13px;
+    left: 22px;
+    bottom: 28vh;
+    font-size: 12px;
   }
 
   .contact {
-    position: static;
-    margin-top: 18vh;
-    font-size: 13px;
+    left: 22px;
+    bottom: 22px;
+    font-size: 12px;
   }
 }
 </style>
