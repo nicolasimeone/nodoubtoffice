@@ -8,13 +8,15 @@
 <style>
 @font-face {
   font-family: "Monument Grotesk";
-  src: url("./MonumentGrotesk-Regular.woff2") format("woff2");
+  src: url("./MonumentGrotesk-Regular.woff2") format("woff2"),
+       url("./MonumentGrotesk-Regular.woff") format("woff");
   font-weight: 400;
 }
 
 @font-face {
   font-family: "Monument Grotesk";
-  src: url("./MonumentGrotesk-Bold.woff2") format("woff2");
+  src: url("./MonumentGrotesk-Bold.woff2") format("woff2"),
+       url("./MonumentGrotesk-Bold.woff") format("woff");
   font-weight: 700;
 }
 
@@ -39,6 +41,7 @@ body {
 
 .page {
   position: relative;
+  width: 100vw;
   min-height: 100vh;
   padding: 38px;
 }
@@ -47,9 +50,10 @@ body {
   width: calc(100vw - 76px);
   max-width: 96vw;
 
+  font-family: "Monument Grotesk", Helvetica, Arial, sans-serif;
   font-size: clamp(42px, 4.05vw, 78px);
-  line-height: 0.92;
-  letter-spacing: -0.065em;
+  line-height: 0.95;
+  letter-spacing: -0.05em;
   font-weight: 700;
 
   word-break: keep-all;
@@ -57,21 +61,15 @@ body {
   hyphens: none;
 }
 
-.highlight {
-  background: #fff200;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
-  padding: 0 0.08em;
-}
-
 .claim {
   position: absolute;
   left: 38px;
   bottom: 27.5vh;
 
-  font-size: 14px;
-  line-height: 0.92;
-  letter-spacing: -0.045em;
+  font-family: "Monument Grotesk", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  line-height: 0.95;
+  letter-spacing: -0.025em;
   font-weight: 700;
 }
 
@@ -80,9 +78,10 @@ body {
   left: 38px;
   bottom: 38px;
 
-  font-size: 14px;
-  line-height: 0.92;
-  letter-spacing: -0.045em;
+  font-family: "Monument Grotesk", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  line-height: 0.95;
+  letter-spacing: -0.025em;
   font-weight: 700;
 }
 
@@ -97,13 +96,14 @@ a:hover {
 
 @media (max-width: 768px) {
   .page {
+    min-height: 100vh;
     padding: 22px;
   }
 
   .services {
     width: calc(100vw - 44px);
     font-size: 34px;
-    line-height: 1.2;
+    line-height: 0.9;
     letter-spacing: -0.065em;
   }
 
@@ -111,12 +111,14 @@ a:hover {
     left: 22px;
     bottom: 28vh;
     font-size: 12px;
+    line-height: 0.92;
   }
 
   .contact {
     left: 22px;
     bottom: 22px;
     font-size: 12px;
+    line-height: 0.92;
   }
 }
 </style>
@@ -127,7 +129,7 @@ a:hover {
 <div class="page">
 
   <div class="services">
-    <span class="highlight">Creative Consulting/<wbr>Direction/<wbr>Branding/<wbr>Identity/<wbr>Visual Communication/<wbr>Graphic Design/<wbr>Typography/<wbr>Editorial/<wbr>Content/<wbr>Storytelling/<wbr>Campaigns/<wbr>Concepts/<wbr>Production/<wbr>Photography/<wbr>Motion/<wbr>3D/<wbr>Digital/<wbr>Web/<wbr>E-Commerce/<wbr>Clothing/<wbr>Merchandise/<wbr>Packaging/<wbr>Objects/<wbr>Culture/<wbr>Research/<wbr>Strategy/<wbr>Craft/<wbr>Details/<wbr>Experiences/<wbr>Collaboration</span>
+    Creative Consulting/<wbr>Direction/<wbr>Branding/<wbr>Identity/<wbr>Visual Communication/<wbr>Graphic Design/<wbr>Typography/<wbr>Editorial/<wbr>Content/<wbr>Storytelling/<wbr>Campaigns/<wbr>Concepts/<wbr>Production/<wbr>Photography/<wbr>Web/<wbr>E-Commerce/<wbr>Clothing/<wbr>Merchandise/<wbr>Packaging/<wbr>Objects/<wbr>Research/<wbr>Strategy/<wbr>Craft/<wbr>Details/<wbr>Experiences/<wbr>Collaboration
   </div>
 
   <div class="claim">
