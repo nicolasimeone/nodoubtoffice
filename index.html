@@ -46,19 +46,41 @@ body {
   padding: 38px;
 }
 
+/* MAIN TEXT WITH INK BLEED */
 .services {
   width: calc(100vw - 76px);
-  max-width: 96vw;
 
-  font-family: "Monument Grotesk", Helvetica, Arial, sans-serif;
   font-size: clamp(42px, 4.05vw, 78px);
-  line-height: 0.95;
-  letter-spacing: -0.05em;
+  line-height: 0.92;
+  letter-spacing: -0.065em;
   font-weight: 700;
 
   word-break: keep-all;
   overflow-wrap: normal;
   hyphens: none;
+
+  animation: inkBleed 18s ease-in-out infinite alternate;
+}
+
+/* small duplicated shadow = ink spreading */
+.services::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 38px;
+  left: 38px;
+  width: calc(100vw - 76px);
+
+  font-size: clamp(42px, 4.05vw, 78px);
+  line-height: 0.92;
+  letter-spacing: -0.065em;
+  font-weight: 700;
+
+  color: #000;
+  opacity: 0.12;
+  filter: blur(2px);
+  pointer-events: none;
+
+  animation: inkShadow 18s ease-in-out infinite alternate;
 }
 
 .claim {
@@ -66,10 +88,9 @@ body {
   left: 38px;
   bottom: 27.5vh;
 
-  font-family: "Monument Grotesk", Helvetica, Arial, sans-serif;
-  font-size: 18px;
-  line-height: 0.95;
-  letter-spacing: -0.025em;
+  font-size: 14px;
+  line-height: 0.92;
+  letter-spacing: -0.045em;
   font-weight: 700;
 }
 
@@ -78,10 +99,9 @@ body {
   left: 38px;
   bottom: 38px;
 
-  font-family: "Monument Grotesk", Helvetica, Arial, sans-serif;
-  font-size: 18px;
-  line-height: 0.95;
-  letter-spacing: -0.025em;
+  font-size: 14px;
+  line-height: 0.92;
+  letter-spacing: -0.045em;
   font-weight: 700;
 }
 
@@ -94,6 +114,49 @@ a:hover {
   opacity: 0.6;
 }
 
+/* ANIMATION */
+@keyframes inkBleed {
+  0% {
+    filter: blur(0px) contrast(1);
+    letter-spacing: -0.065em;
+  }
+
+  40% {
+    filter: blur(0.4px) contrast(1.25);
+  }
+
+  70% {
+    filter: blur(0.9px) contrast(1.45);
+    letter-spacing: -0.072em;
+  }
+
+  100% {
+    filter: blur(1.4px) contrast(1.65);
+    letter-spacing: -0.078em;
+  }
+}
+
+@keyframes inkShadow {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0.05;
+    filter: blur(1px);
+  }
+
+  50% {
+    transform: translate(1px, 0.5px);
+    opacity: 0.14;
+    filter: blur(2px);
+  }
+
+  100% {
+    transform: translate(2px, 1px);
+    opacity: 0.2;
+    filter: blur(3px);
+  }
+}
+
+/* MOBILE */
 @media (max-width: 768px) {
   .page {
     min-height: 100vh;
@@ -104,21 +167,26 @@ a:hover {
     width: calc(100vw - 44px);
     font-size: 34px;
     line-height: 0.9;
-    letter-spacing: -0.065em;
+  }
+
+  .services::after {
+    top: 22px;
+    left: 22px;
+    width: calc(100vw - 44px);
+    font-size: 34px;
+    line-height: 0.9;
   }
 
   .claim {
     left: 22px;
     bottom: 28vh;
     font-size: 12px;
-    line-height: 0.92;
   }
 
   .contact {
     left: 22px;
     bottom: 22px;
     font-size: 12px;
-    line-height: 0.92;
   }
 }
 </style>
@@ -128,8 +196,8 @@ a:hover {
 
 <div class="page">
 
-  <div class="services">
-    Creative Consulting/<wbr>Direction/<wbr>Branding/<wbr>Identity/<wbr>Visual Communication/<wbr>Graphic Design/<wbr>Typography/<wbr>Editorial/<wbr>Content/<wbr>Storytelling/<wbr>Campaigns/<wbr>Concepts/<wbr>Production/<wbr>Photography/<wbr>Web/<wbr>E-Commerce/<wbr>Clothing/<wbr>Merchandise/<wbr>Packaging/<wbr>Objects/<wbr>Research/<wbr>Strategy/<wbr>Craft/<wbr>Details/<wbr>Experiences/<wbr>Collaboration
+  <div class="services" data-text="Creative Consulting/Direction/Branding/Identity/Visual Communication/Graphic Design/Typography/Editorial/Content/Storytelling/Campaigns/Concepts/Production/Photography/Motion/3D/Digital/Web/E-Commerce/Clothing/Merchandise/Packaging/Objects/Culture/Research/Strategy/Craft/Details/Experiences/Collaboration">
+    Creative Consulting/<wbr>Direction/<wbr>Branding/<wbr>Identity/<wbr>Visual Communication/<wbr>Graphic Design/<wbr>Typography/<wbr>Editorial/<wbr>Content/<wbr>Storytelling/<wbr>Campaigns/<wbr>Concepts/<wbr>Production/<wbr>Photography/<wbr>Motion/<wbr>3D/<wbr>Digital/<wbr>Web/<wbr>E-Commerce/<wbr>Clothing/<wbr>Merchandise/<wbr>Packaging/<wbr>Objects/<wbr>Culture/<wbr>Research/<wbr>Strategy/<wbr>Craft/<wbr>Details/<wbr>Experiences/<wbr>Collaboration
   </div>
 
   <div class="claim">
