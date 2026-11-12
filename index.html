@@ -77,22 +77,27 @@ a:focus-visible {
 /* Header */
 
 .header {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 24px;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
   padding: 24px var(--pad);
   font-size: 16px;
   letter-spacing: -0.02em;
+  white-space: nowrap;
 }
 
 .nav {
+  display: contents;
+}
+
+.nav-group {
   display: flex;
   gap: 24px;
 }
 
 .status {
+  justify-self: end;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -151,7 +156,7 @@ a:focus-visible {
 .services ol {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   column-gap: 24px;
 }
 
@@ -238,13 +243,48 @@ a:focus-visible {
   color: var(--muted);
 }
 
+@media (max-width: 1099px) {
+  .services ol {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 768px) {
   .header {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
     font-size: 14px;
+  }
+
+  .brand {
+    display: none;
+  }
+
+  .nav-group {
+    display: contents;
+  }
+
+  .services ol {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .contact-links {
+    font-size: 8.2vw;
   }
 
   .services li {
     font-size: 20px;
+  }
+}
+@media (max-width: 370px) {
+  .header {
+    font-size: 12px;
+    gap: 6px;
+  }
+
+  .status {
+    gap: 5px;
   }
 }
 </style>
@@ -253,11 +293,13 @@ a:focus-visible {
 <body id="top">
 
 <header class="header">
-  <span>Nodoubt Office</span>
+  <span class="brand">Nodoubt Office</span>
   <nav class="nav" aria-label="Main">
-    <a href="#services">Services</a>
-    <a href="#contact">Contact</a>
-    <a href="https://termine.nodoubtoffice.com" class="login">Client Login ↗</a>
+    <span class="nav-group">
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </span>
+    <a href="https://termine.nodoubtoffice.com" class="login">Client Login</a>
   </nav>
   <span class="status">Available</span>
 </header>
@@ -311,7 +353,7 @@ a:focus-visible {
   </div>
   <a href="https://termine.nodoubtoffice.com" class="booking">
     <span>Existing clients</span>
-    <strong>Log in to book an appointment ↗</strong>
+    <strong>Log in to book an appointment</strong>
   </a>
   <div class="footer">
     <span>© Nodoubt Office</span>
