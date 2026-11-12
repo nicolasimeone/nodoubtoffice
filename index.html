@@ -4,20 +4,38 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nodoubt Office</title>
+<meta name="description" content="Nodoubt Office — creative consulting, design and direction. Currently available for new projects.">
+<meta name="theme-color" content="#0b0b0b">
 
 <style>
 @font-face {
-  font-family: "Monument Grotesk";
-  src: url("./MonumentGrotesk-Regular.woff2") format("woff2"),
-       url("./MonumentGrotesk-Regular.woff") format("woff");
+  font-family: "Neue Haas Display";
+  src: url("./NeueHaasDisplayRoman.ttf") format("truetype");
   font-weight: 400;
+  font-display: swap;
 }
 
 @font-face {
-  font-family: "Monument Grotesk";
-  src: url("./MonumentGrotesk-Bold.woff2") format("woff2"),
-       url("./MonumentGrotesk-Bold.woff") format("woff");
+  font-family: "Neue Haas Display";
+  src: url("./NeueHaasDisplayMediu.ttf") format("truetype");
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Neue Haas Display";
+  src: url("./NeueHaasDisplayBold.ttf") format("truetype");
   font-weight: 700;
+  font-display: swap;
+}
+
+:root {
+  --bg: #0b0b0b;
+  --fg: #f4f4f0;
+  --muted: #a8a8a2;
+  --line: #3a3a37;
+  --accent: #d4ff3a;
+  --pad: clamp(20px, 3vw, 40px);
 }
 
 * {
@@ -26,123 +44,249 @@
   box-sizing: border-box;
 }
 
-html,
-body {
-  width: 100%;
-  min-height: 100%;
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: #ffffff;
-  color: #000000;
-  font-family: "Monument Grotesk", Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "Neue Haas Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 
-.page {
-  position: relative;
-  width: 100vw;
-  min-height: 100vh;
-  padding: 38px;
+a {
+  color: var(--fg);
+  text-decoration: none;
+  transition: color 0.15s;
 }
+
+a:hover,
+a:focus-visible {
+  color: var(--accent);
+}
+
+a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* Header */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 24px var(--pad);
+  font-size: 16px;
+  letter-spacing: -0.02em;
+}
+
+.nav {
+  display: flex;
+  gap: 24px;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent);
+}
+
+.status::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+}
+
+/* Hero */
+
+.hero {
+  padding: clamp(24px, 4vw, 48px) var(--pad) 0;
+}
+
+.wordmark {
+  font-weight: 700;
+  font-size: clamp(72px, 15vw, 232px);
+  line-height: 0.84;
+  letter-spacing: -0.065em;
+}
+
+.intro {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-size: clamp(20px, 1.8vw, 26px);
+  line-height: 1.1;
+}
+
+.intro p + p {
+  color: var(--muted);
+}
+
+/* Services */
 
 .services {
-  width: calc(100vw - 76px);
-  max-width: 96vw;
-
-  font-family: "Monument Grotesk", Helvetica, Arial, sans-serif;
-  font-size: clamp(42px, 4.05vw, 78px);
-  line-height: 0.95;
-  letter-spacing: -0.05em;
-  font-weight: 700;
-
-  word-break: keep-all;
-  overflow-wrap: normal;
-  hyphens: none;
+  padding: clamp(64px, 8vw, 120px) var(--pad) 0;
 }
 
-.claim {
-  position: absolute;
-  left: 38px;
-  bottom: 27.5vh;
-
-  font-family: "Monument Grotesk", Helvetica, Arial, sans-serif;
-  font-size: 18px;
-  line-height: 0.95;
-  letter-spacing: -0.025em;
+.label {
+  margin-bottom: 20px;
+  font-size: 16px;
   font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--muted);
 }
+
+.services ol {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  column-gap: 24px;
+}
+
+.services li {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  font-size: 24px;
+  transition: color 0.15s;
+}
+
+.services li:hover {
+  color: var(--accent);
+}
+
+.services li span {
+  min-width: 24px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: #8a8a85;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Contact */
 
 .contact {
-  position: absolute;
-  left: 38px;
-  bottom: 38px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: clamp(80px, 10vw, 140px) var(--pad) 24px;
+}
 
-  font-family: "Monument Grotesk", Helvetica, Arial, sans-serif;
-  font-size: 18px;
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: clamp(30px, 5.6vw, 92px);
   line-height: 0.95;
-  letter-spacing: -0.025em;
-  font-weight: 700;
+  letter-spacing: -0.055em;
 }
 
-a {
-  color: #000000;
-  text-decoration: none;
+.footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+  letter-spacing: -0.02em;
+  color: var(--muted);
 }
 
-a:hover {
-  opacity: 0.6;
+.footer a {
+  color: var(--muted);
 }
 
 @media (max-width: 768px) {
-  .page {
-    min-height: 100vh;
-    padding: 22px;
+  .header {
+    font-size: 14px;
   }
 
-  .services {
-    width: calc(100vw - 44px);
-    font-size: 34px;
-    line-height: 0.9;
-    letter-spacing: -0.065em;
-  }
-
-  .claim {
-    left: 22px;
-    bottom: 28vh;
-    font-size: 12px;
-    line-height: 0.92;
-  }
-
-  .contact {
-    left: 22px;
-    bottom: 22px;
-    font-size: 12px;
-    line-height: 0.92;
+  .services li {
+    font-size: 20px;
   }
 }
 </style>
 </head>
 
-<body>
+<body id="top">
 
-<div class="page">
+<header class="header">
+  <span>Nodoubt Office</span>
+  <nav class="nav" aria-label="Main">
+    <a href="#services">Services</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <span class="status">Available</span>
+</header>
 
-  <div class="services">
-    Creative Consulting/<wbr>Direction/<wbr>Branding/<wbr>Identity/<wbr>Visual Communication/<wbr>Graphic Design/<wbr>Typography/<wbr>Editorial/<wbr>Content/<wbr>Storytelling/<wbr>Campaigns/<wbr>Concepts/<wbr>Production/<wbr>Photography/<wbr>Web/<wbr>E-Commerce/<wbr>Clothing/<wbr>Merchandise/<wbr>Packaging/<wbr>Objects/<wbr>Research/<wbr>Strategy/<wbr>Craft/<wbr>Details/<wbr>Experiences/<wbr>Collaboration
+<main>
+  <section class="hero">
+    <h1 class="wordmark">Nodoubt<br>Office</h1>
+    <div class="intro">
+      <p>Creative consulting, design and direction.</p>
+      <p>Currently available for new projects.</p>
+    </div>
+  </section>
+
+  <section class="services" id="services" aria-labelledby="services-label">
+    <h2 class="label" id="services-label">Services/26</h2>
+    <ol>
+      <li><span>01</span>Creative Consulting</li>
+      <li><span>02</span>Direction</li>
+      <li><span>03</span>Branding</li>
+      <li><span>04</span>Identity</li>
+      <li><span>05</span>Visual Communication</li>
+      <li><span>06</span>Graphic Design</li>
+      <li><span>07</span>Typography</li>
+      <li><span>08</span>Editorial</li>
+      <li><span>09</span>Content</li>
+      <li><span>10</span>Storytelling</li>
+      <li><span>11</span>Campaigns</li>
+      <li><span>12</span>Concepts</li>
+      <li><span>13</span>Production</li>
+      <li><span>14</span>Photography</li>
+      <li><span>15</span>Web</li>
+      <li><span>16</span>E-Commerce</li>
+      <li><span>17</span>Clothing</li>
+      <li><span>18</span>Merchandise</li>
+      <li><span>19</span>Packaging</li>
+      <li><span>20</span>Objects</li>
+      <li><span>21</span>Research</li>
+      <li><span>22</span>Strategy</li>
+      <li><span>23</span>Craft</li>
+      <li><span>24</span>Details</li>
+      <li><span>25</span>Experiences</li>
+      <li><span>26</span>Collaboration</li>
+    </ol>
+  </section>
+</main>
+
+<footer class="contact" id="contact">
+  <div class="contact-links">
+    <a href="mailto:info@nodoubtoffice.com">info@nodoubtoffice.com</a>
+    <a href="https://instagram.com/nodoubtoffice" target="_blank" rel="noopener">@nodoubtoffice</a>
   </div>
-
-  <div class="claim">
-    Creative consulting, design and direction.<br>
-    Currently available for new projects.
+  <div class="footer">
+    <span>© Nodoubt Office</span>
+    <a href="#top">Top ↑</a>
   </div>
-
-  <div class="contact">
-    <a href="mailto:info@nodoubtoffice.com">info@nodoubtoffice.com</a><br>
-    <a href="https://instagram.com/nodoubtoffice" target="_blank">@nodoubtoffice</a>
-  </div>
-
-</div>
+</footer>
 
 </body>
 </html>
