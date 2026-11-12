@@ -196,6 +196,32 @@ a:focus-visible {
   letter-spacing: -0.055em;
 }
 
+.login {
+  color: var(--accent);
+}
+
+.booking {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px 24px;
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
+  font-size: clamp(20px, 2vw, 28px);
+  letter-spacing: -0.03em;
+}
+
+.booking span {
+  font-size: 16px;
+  letter-spacing: -0.02em;
+  color: var(--muted);
+}
+
+.booking strong {
+  font-weight: 700;
+}
+
 .footer {
   display: flex;
   justify-content: space-between;
@@ -231,6 +257,7 @@ a:focus-visible {
   <nav class="nav" aria-label="Main">
     <a href="#services">Services</a>
     <a href="#contact">Contact</a>
+    <a href="https://termine.nodoubtoffice.com" class="login">Client Login ↗</a>
   </nav>
   <span class="status">Available</span>
 </header>
@@ -282,6 +309,10 @@ a:focus-visible {
     <a href="mailto:info@nodoubtoffice.com">info@nodoubtoffice.com</a>
     <a href="https://instagram.com/nodoubtoffice" target="_blank" rel="noopener">@nodoubtoffice</a>
   </div>
+  <a href="https://termine.nodoubtoffice.com" class="booking">
+    <span>Existing clients</span>
+    <strong>Log in to book an appointment ↗</strong>
+  </a>
   <div class="footer">
     <span>© Nodoubt Office</span>
     <a href="#top">Top ↑</a>
