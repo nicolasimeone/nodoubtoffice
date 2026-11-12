@@ -108,16 +108,19 @@ a:focus-visible {
   white-space: nowrap;
 }
 
-.nav {
-  display: contents;
+.brand {
+  grid-column: 1 / span 2;
 }
 
-.nav-group {
+.nav {
+  grid-column: 3;
   display: flex;
   gap: var(--gutter);
 }
 
 .status {
+  grid-column: 4;
+  justify-self: end;
   color: var(--accent);
 }
 
@@ -244,6 +247,7 @@ a:focus-visible {
 
 .footer .top {
   grid-column: 4;
+  justify-self: end;
 }
 
 .footer a:hover,
@@ -270,12 +274,8 @@ a:focus-visible {
     display: none;
   }
 
-  .nav-group {
+  .nav {
     display: contents;
-  }
-
-  .status {
-    justify-self: end;
   }
 
   .intro p,
@@ -290,10 +290,6 @@ a:focus-visible {
   .contact-links {
     font-size: 8.2vw;
   }
-
-  .footer .top {
-    justify-self: end;
-  }
 }
 </style>
 </head>
@@ -303,10 +299,8 @@ a:focus-visible {
 <header class="header grid small">
   <span class="brand">Nodoubt Office</span>
   <nav class="nav" aria-label="Main">
-    <span class="nav-group">
-      <a href="#services">Services</a>
-      <a href="#contact">Contact</a>
-    </span>
+    <a href="#services">Services</a>
+    <a href="#contact">Contact</a>
     <a href="https://termine.nodoubtoffice.com">Client Login</a>
   </nav>
   <span class="status">Available</span>
