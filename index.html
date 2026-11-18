@@ -191,18 +191,40 @@ a:focus-visible {
 }
 
 .services li {
-  display: flex;
-  gap: 16px;
-  align-items: baseline;
-  padding: 12px 0;
   border-top: 1px solid var(--line);
   font-size: 24px;
   line-height: 1.2;
+}
+
+.svc {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+  width: 100%;
+  padding: 12px 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-align: left;
+  cursor: default;
   transition: color 0.15s;
 }
 
-.services li:hover {
+.svc:hover,
+.svc:focus-visible,
+.svc[aria-expanded="true"] {
   color: var(--grey);
+}
+
+.svc:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 4px;
+}
+
+.has-img .svc {
+  cursor: pointer;
 }
 
 .services li span {
@@ -212,6 +234,33 @@ a:focus-visible {
   letter-spacing: 0;
   color: var(--grey);
   font-variant-numeric: tabular-nums;
+}
+
+/* Service images: desktop preview sits on a grid column next to the hovered item */
+
+.preview {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  display: block;
+  height: auto;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.preview.is-visible {
+  opacity: 1;
+}
+
+/* Touch: image opens below the tapped item */
+
+.services li img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: 12px;
 }
 
 /* Contact */
@@ -319,32 +368,32 @@ a:focus-visible {
   <section class="services grid" id="services" aria-labelledby="services-label">
     <h2 class="label small full" id="services-label">Services/26</h2>
     <ol class="full">
-      <li><span>01</span>Creative Consulting</li>
-      <li><span>02</span>Direction</li>
-      <li><span>03</span>Branding</li>
-      <li><span>04</span>Identity</li>
-      <li><span>05</span>Visual Communication</li>
-      <li><span>06</span>Graphic Design</li>
-      <li><span>07</span>Typography</li>
-      <li><span>08</span>Editorial</li>
-      <li><span>09</span>Content</li>
-      <li><span>10</span>Storytelling</li>
-      <li><span>11</span>Campaigns</li>
-      <li><span>12</span>Concepts</li>
-      <li><span>13</span>Production</li>
-      <li><span>14</span>Photography</li>
-      <li><span>15</span>Web</li>
-      <li><span>16</span>E-Commerce</li>
-      <li><span>17</span>Clothing</li>
-      <li><span>18</span>Merchandise</li>
-      <li><span>19</span>Packaging</li>
-      <li><span>20</span>Objects</li>
-      <li><span>21</span>Research</li>
-      <li><span>22</span>Strategy</li>
-      <li><span>23</span>Craft</li>
-      <li><span>24</span>Details</li>
-      <li><span>25</span>Experiences</li>
-      <li><span>26</span>Collaboration</li>
+      <li><button class="svc" type="button" data-n="01"><span>01</span>Creative Consulting</button></li>
+      <li><button class="svc" type="button" data-n="02"><span>02</span>Direction</button></li>
+      <li><button class="svc" type="button" data-n="03"><span>03</span>Branding</button></li>
+      <li><button class="svc" type="button" data-n="04"><span>04</span>Identity</button></li>
+      <li><button class="svc" type="button" data-n="05"><span>05</span>Visual Communication</button></li>
+      <li><button class="svc" type="button" data-n="06"><span>06</span>Graphic Design</button></li>
+      <li><button class="svc" type="button" data-n="07"><span>07</span>Typography</button></li>
+      <li><button class="svc" type="button" data-n="08"><span>08</span>Editorial</button></li>
+      <li><button class="svc" type="button" data-n="09"><span>09</span>Content</button></li>
+      <li><button class="svc" type="button" data-n="10"><span>10</span>Storytelling</button></li>
+      <li><button class="svc" type="button" data-n="11"><span>11</span>Campaigns</button></li>
+      <li><button class="svc" type="button" data-n="12"><span>12</span>Concepts</button></li>
+      <li><button class="svc" type="button" data-n="13"><span>13</span>Production</button></li>
+      <li><button class="svc" type="button" data-n="14"><span>14</span>Photography</button></li>
+      <li><button class="svc" type="button" data-n="15"><span>15</span>Web</button></li>
+      <li><button class="svc" type="button" data-n="16"><span>16</span>E-Commerce</button></li>
+      <li><button class="svc" type="button" data-n="17"><span>17</span>Clothing</button></li>
+      <li><button class="svc" type="button" data-n="18"><span>18</span>Merchandise</button></li>
+      <li><button class="svc" type="button" data-n="19"><span>19</span>Packaging</button></li>
+      <li><button class="svc" type="button" data-n="20"><span>20</span>Objects</button></li>
+      <li><button class="svc" type="button" data-n="21"><span>21</span>Research</button></li>
+      <li><button class="svc" type="button" data-n="22"><span>22</span>Strategy</button></li>
+      <li><button class="svc" type="button" data-n="23"><span>23</span>Craft</button></li>
+      <li><button class="svc" type="button" data-n="24"><span>24</span>Details</button></li>
+      <li><button class="svc" type="button" data-n="25"><span>25</span>Experiences</button></li>
+      <li><button class="svc" type="button" data-n="26"><span>26</span>Collaboration</button></li>
     </ol>
   </section>
 </main>
@@ -360,6 +409,101 @@ a:focus-visible {
     <a href="#top" class="top">Top ↑</a>
   </div>
 </footer>
+
+<img class="preview" alt="" aria-hidden="true">
+
+<script>
+(function () {
+  var DIR = "services/";
+  var EXT = ".jpg";
+  var hover = window.matchMedia("(hover: hover) and (pointer: fine)");
+  var preview = document.querySelector(".preview");
+  var items = document.querySelectorAll(".services li");
+  var current = null;
+
+  function src(n) {
+    return DIR + n + EXT;
+  }
+
+  // Mark items whose image exists, without downloading the images
+  items.forEach(function (li) {
+    var n = li.querySelector(".svc").dataset.n;
+    fetch(src(n), { method: "HEAD" })
+      .then(function (r) {
+        if (r.ok) li.classList.add("has-img");
+      })
+      .catch(function () {});
+  });
+
+  // Desktop: show the image on the neighbouring grid column
+  function place(li) {
+    var r = li.getBoundingClientRect();
+    var gutter = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--gutter")) || 24;
+    var list = li.parentElement.getBoundingClientRect();
+    var w = r.width;
+    var x = r.right + gutter;
+    if (x + w > list.right + 1) x = r.left - gutter - w;
+    if (x < list.left - 1) x = list.right - w;
+    preview.style.width = w + "px";
+    var h = preview.naturalWidth ? w * preview.naturalHeight / preview.naturalWidth : w * 1.25;
+    var y = r.top + r.height / 2 - h / 2;
+    y = Math.max(16, Math.min(y, window.innerHeight - h - 16));
+    preview.style.transform = "translate(" + Math.round(x) + "px," + Math.round(y) + "px)";
+  }
+
+  function show(li) {
+    if (!hover.matches || !li.classList.contains("has-img")) return;
+    current = li;
+    var url = src(li.querySelector(".svc").dataset.n);
+    if (preview.getAttribute("src") !== url) {
+      preview.classList.remove("is-visible");
+      preview.onload = function () {
+        if (current === li) {
+          place(li);
+          preview.classList.add("is-visible");
+        }
+      };
+      preview.setAttribute("src", url);
+    } else {
+      place(li);
+      preview.classList.add("is-visible");
+    }
+  }
+
+  function hide() {
+    current = null;
+    preview.classList.remove("is-visible");
+  }
+
+  items.forEach(function (li) {
+    var btn = li.querySelector(".svc");
+    li.addEventListener("mouseenter", function () { show(li); });
+    li.addEventListener("mouseleave", hide);
+    btn.addEventListener("focus", function () { show(li); });
+    btn.addEventListener("blur", hide);
+
+    // Touch: tap opens the image below the item, one at a time
+    btn.addEventListener("click", function () {
+      if (hover.matches || !li.classList.contains("has-img")) return;
+      var open = btn.getAttribute("aria-expanded") === "true";
+      document.querySelectorAll('.svc[aria-expanded="true"]').forEach(function (b) {
+        b.setAttribute("aria-expanded", "false");
+        var img = b.parentElement.querySelector("img");
+        if (img) img.remove();
+      });
+      if (open) return;
+      var img = document.createElement("img");
+      img.src = src(btn.dataset.n);
+      img.alt = btn.textContent.replace(/^\d+/, "").trim();
+      li.appendChild(img);
+      btn.setAttribute("aria-expanded", "true");
+    });
+  });
+
+  window.addEventListener("scroll", hide, { passive: true });
+  window.addEventListener("resize", hide);
+})();
+</script>
 
 </body>
 </html>
