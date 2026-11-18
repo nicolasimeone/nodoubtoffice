@@ -110,6 +110,16 @@ a:focus-visible {
 
 .brand {
   grid-column: 1 / span 2;
+  justify-self: start;
+  display: block;
+  line-height: 0;
+}
+
+.brand svg {
+  display: block;
+  height: 20px;
+  width: auto;
+  fill: currentColor;
 }
 
 .nav {
@@ -346,7 +356,12 @@ a:focus-visible {
 <body id="top">
 
 <header class="header grid small">
-  <span class="brand">Nodoubt Office</span>
+  <a href="#top" class="brand" aria-label="Nodoubt Office">
+    <svg viewBox="0 0 226.77 75.59" aria-hidden="true" focusable="false">
+      <path d="M112.53,0L75.66,0c-0.04,0-0.07,0.03-0.07,0.07l0,37.73c0-21.21-17.47-38.33-38.79-37.78C16.17,0.54,0,18.01,0,38.65l0,36.87c0,0.04,0.03,0.07,0.07,0.07l36.33,0l0-37.8l2.8,0l0,37.8l36.33,0c0.04,0,0.07-0.03,0.07-0.07v0c0,0.04,0.03,0.07,0.07,0.07l37.73,0c21.21,0,38.33-17.46,37.78-38.79C150.64,16.17,133.17,0,112.53,0z"/>
+      <circle cx="188.98" cy="37.8" r="37.8"/>
+    </svg>
+  </a>
   <nav class="nav" aria-label="Main">
     <a href="#services">Services</a>
     <a href="#contact">Contact</a>
