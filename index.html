@@ -151,6 +151,13 @@ a:focus-visible {
   fill: currentColor;
 }
 
+/* Desktop: the straight edge of the D (x = 112.53 of 226.77) sits on the end of column 1 */
+@media (min-width: 769px) {
+  .wordmark svg {
+    width: calc((100% - var(--gutter)) / 2 * 226.77 / 112.53);
+  }
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
