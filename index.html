@@ -308,6 +308,7 @@ a:focus-visible {
 
 .preview {
   position: fixed;
+  overflow: hidden;
   top: 0;
   left: 0;
   z-index: 10;
@@ -320,6 +321,56 @@ a:focus-visible {
 
 .preview.is-visible {
   opacity: 1;
+}
+
+.preview img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Video items: 16:9 frame, the image is the poster until the video plays */
+
+.preview.is-video,
+.inline-video {
+  aspect-ratio: 16 / 9;
+  background: var(--bg);
+}
+
+.inline-video {
+  position: relative;
+}
+
+.preview.is-video img,
+.services .inline-video img {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  object-fit: cover;
+}
+
+.preview iframe,
+.inline-video iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.preview iframe.is-ready,
+.inline-video iframe.is-ready {
+  opacity: 1;
+}
+
+.inline-video {
+  margin-bottom: 12px;
+}
+
+.services .inline-video img {
+  margin: 0;
 }
 
 /* Touch: image opens below the tapped item */
@@ -521,24 +572,61 @@ a:focus-visible {
   </div>
 </footer>
 
-<img class="preview" alt="" aria-hidden="true">
+<div class="preview" aria-hidden="true"><img alt=""></div>
 
 <script>
 (function () {
   var DIR = "services/";
   var EXT = ".jpg";
+
+  // Services that show a YouTube video instead of an image: number → video ID
+  var VIDEOS = {
+    "25": "UGikIBK8BAw"
+  };
+
   var hover = window.matchMedia("(hover: hover) and (pointer: fine)");
   var preview = document.querySelector(".preview");
+  var previewImg = preview.querySelector("img");
   var items = document.querySelectorAll(".services li");
   var current = null;
+  var players = {};
 
   function src(n) {
     return DIR + n + EXT;
   }
 
-  // Mark items whose image exists, without downloading the images
+  function embed(id, controls) {
+    return "https://www.youtube-nocookie.com/embed/" + id +
+      "?autoplay=1&mute=1&loop=1&playlist=" + id +
+      "&controls=" + (controls ? 1 : 0) +
+      "&playsinline=1&rel=0&modestbranding=1&enablejsapi=1&origin=" + encodeURIComponent(location.origin);
+  }
+
+  function makeFrame(id, controls) {
+    var f = document.createElement("iframe");
+    f.src = embed(id, controls);
+    f.title = "Video";
+    f.allow = "autoplay; encrypted-media; picture-in-picture";
+    f.setAttribute("tabindex", "-1");
+    f.addEventListener("load", function () {
+      setTimeout(function () { f.classList.add("is-ready"); }, 600);
+    });
+    return f;
+  }
+
+  function command(frame, func) {
+    if (frame && frame.contentWindow) {
+      frame.contentWindow.postMessage(JSON.stringify({ event: "command", func: func, args: [] }), "*");
+    }
+  }
+
+  // Mark items that have media, without downloading the images
   items.forEach(function (li) {
     var n = li.querySelector(".svc").dataset.n;
+    if (VIDEOS[n]) {
+      li.classList.add("has-img");
+      return;
+    }
     fetch(src(n), { method: "HEAD" })
       .then(function (r) {
         if (r.ok) li.classList.add("has-img");
@@ -546,8 +634,8 @@ a:focus-visible {
       .catch(function () {});
   });
 
-  // Desktop: show the image on the neighbouring grid column
-  function place(li) {
+  // Desktop: show the media on the neighbouring grid column
+  function place(li, ratio) {
     var r = li.getBoundingClientRect();
     var gutter = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--gutter")) || 24;
     var list = li.parentElement.getBoundingClientRect();
@@ -556,27 +644,54 @@ a:focus-visible {
     if (x + w > list.right + 1) x = r.left - gutter - w;
     if (x < list.left - 1) x = list.right - w;
     preview.style.width = w + "px";
-    var h = preview.naturalWidth ? w * preview.naturalHeight / preview.naturalWidth : w * 1.25;
+    var h = w * ratio;
     var y = r.top + r.height / 2 - h / 2;
     y = Math.max(16, Math.min(y, window.innerHeight - h - 16));
     preview.style.transform = "translate(" + Math.round(x) + "px," + Math.round(y) + "px)";
   }
 
+  function pauseAll() {
+    Object.keys(players).forEach(function (k) {
+      command(players[k], "pauseVideo");
+      players[k].style.display = "none";
+    });
+  }
+
   function show(li) {
     if (!hover.matches || !li.classList.contains("has-img")) return;
     current = li;
-    var url = src(li.querySelector(".svc").dataset.n);
-    if (preview.getAttribute("src") !== url) {
+    var n = li.querySelector(".svc").dataset.n;
+    var url = src(n);
+    pauseAll();
+
+    if (VIDEOS[n]) {
+      preview.classList.add("is-video");
+      previewImg.onerror = function () { previewImg.removeAttribute("src"); };
+      if (previewImg.getAttribute("src") !== url) previewImg.setAttribute("src", url);
+      if (!players[n]) {
+        players[n] = makeFrame(VIDEOS[n], false);
+        preview.appendChild(players[n]);
+      } else {
+        players[n].style.display = "";
+        command(players[n], "playVideo");
+      }
+      place(li, 9 / 16);
+      preview.classList.add("is-visible");
+      return;
+    }
+
+    preview.classList.remove("is-video");
+    if (previewImg.getAttribute("src") !== url) {
       preview.classList.remove("is-visible");
-      preview.onload = function () {
+      previewImg.onload = function () {
         if (current === li) {
-          place(li);
+          place(li, previewImg.naturalHeight / previewImg.naturalWidth);
           preview.classList.add("is-visible");
         }
       };
-      preview.setAttribute("src", url);
+      previewImg.setAttribute("src", url);
     } else {
-      place(li);
+      place(li, previewImg.naturalHeight / previewImg.naturalWidth || 1.25);
       preview.classList.add("is-visible");
     }
   }
@@ -584,6 +699,15 @@ a:focus-visible {
   function hide() {
     current = null;
     preview.classList.remove("is-visible");
+    pauseAll();
+  }
+
+  function closeInline() {
+    document.querySelectorAll('.svc[aria-expanded="true"]').forEach(function (b) {
+      b.setAttribute("aria-expanded", "false");
+      var media = b.parentElement.querySelector("img, .inline-video");
+      if (media) media.remove();
+    });
   }
 
   items.forEach(function (li) {
@@ -593,20 +717,33 @@ a:focus-visible {
     btn.addEventListener("focus", function () { show(li); });
     btn.addEventListener("blur", hide);
 
-    // Touch: tap opens the image below the item, one at a time
+    // Touch: tap opens the media below the item, one at a time
     btn.addEventListener("click", function () {
       if (hover.matches || !li.classList.contains("has-img")) return;
       var open = btn.getAttribute("aria-expanded") === "true";
-      document.querySelectorAll('.svc[aria-expanded="true"]').forEach(function (b) {
-        b.setAttribute("aria-expanded", "false");
-        var img = b.parentElement.querySelector("img");
-        if (img) img.remove();
-      });
+      closeInline();
       if (open) return;
-      var img = document.createElement("img");
-      img.src = src(btn.dataset.n);
-      img.alt = btn.textContent.replace(/^\d+/, "").trim();
-      li.appendChild(img);
+      var n = btn.dataset.n;
+      var label = btn.textContent.replace(/^\d+/, "").trim();
+      if (VIDEOS[n]) {
+        var box = document.createElement("div");
+        box.className = "inline-video";
+        var poster = document.createElement("img");
+        poster.alt = "";
+        poster.onerror = function () { poster.remove(); };
+        poster.src = src(n);
+        box.appendChild(poster);
+        var f = makeFrame(VIDEOS[n], true);
+        f.title = label;
+        f.removeAttribute("tabindex");
+        box.appendChild(f);
+        li.appendChild(box);
+      } else {
+        var img = document.createElement("img");
+        img.src = src(n);
+        img.alt = label;
+        li.appendChild(img);
+      }
       btn.setAttribute("aria-expanded", "true");
     });
   });
