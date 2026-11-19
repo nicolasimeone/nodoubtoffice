@@ -329,7 +329,7 @@ a:focus-visible {
   height: auto;
 }
 
-/* Video items: 16:9 frame, the image is the poster until the video plays */
+/* Video items: 16:9 frame */
 
 .preview.is-video,
 .inline-video {
@@ -609,7 +609,10 @@ a:focus-visible {
     f.allow = "autoplay; encrypted-media; picture-in-picture";
     f.setAttribute("tabindex", "-1");
     f.addEventListener("load", function () {
-      setTimeout(function () { f.classList.add("is-ready"); }, 600);
+      setTimeout(function () {
+        f.classList.add("is-ready");
+        if (f.onready) f.onready();
+      }, 600);
     });
     return f;
   }
@@ -666,21 +669,29 @@ a:focus-visible {
 
     if (VIDEOS[n]) {
       preview.classList.add("is-video");
-      previewImg.onerror = function () { previewImg.removeAttribute("src"); };
-      if (previewImg.getAttribute("src") !== url) previewImg.setAttribute("src", url);
-      if (!players[n]) {
-        players[n] = makeFrame(VIDEOS[n], false);
-        preview.appendChild(players[n]);
-      } else {
-        players[n].style.display = "";
-        command(players[n], "playVideo");
-      }
+      previewImg.style.display = "none";
       place(li, 9 / 16);
-      preview.classList.add("is-visible");
+      var frame = players[n];
+      if (!frame) {
+        frame = players[n] = makeFrame(VIDEOS[n], false);
+        preview.classList.remove("is-visible");
+        preview.appendChild(frame);
+      } else {
+        frame.style.display = "";
+        command(frame, "playVideo");
+      }
+      if (frame.classList.contains("is-ready")) {
+        preview.classList.add("is-visible");
+      } else {
+        frame.onready = function () {
+          if (current === li) preview.classList.add("is-visible");
+        };
+      }
       return;
     }
 
     preview.classList.remove("is-video");
+    previewImg.style.display = "";
     if (previewImg.getAttribute("src") !== url) {
       preview.classList.remove("is-visible");
       previewImg.onload = function () {
@@ -728,11 +739,6 @@ a:focus-visible {
       if (VIDEOS[n]) {
         var box = document.createElement("div");
         box.className = "inline-video";
-        var poster = document.createElement("img");
-        poster.alt = "";
-        poster.onerror = function () { poster.remove(); };
-        poster.src = src(n);
-        box.appendChild(poster);
         var f = makeFrame(VIDEOS[n], true);
         f.title = label;
         f.removeAttribute("tabindex");
