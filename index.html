@@ -151,10 +151,67 @@ a:focus-visible {
   fill: currentColor;
 }
 
-/* Desktop: the whole logo sits in grid column 1 */
+/* Load screen: desktop only for now */
+
+.loader {
+  display: none;
+}
+
 @media (min-width: 769px) {
+  /* The logo moves into the load screen; the rule sits right under the header */
+  .hero {
+    padding-top: 0;
+  }
+
   .wordmark svg {
-    width: calc((100% - var(--gutter)) / 2);
+    display: none;
+  }
+
+  .hero .rule {
+    margin-top: 0 !important;
+  }
+
+  .loader {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: grid;
+    place-items: center;
+    background: var(--bg);
+    animation: loader-out 0.6s ease 1.8s forwards;
+  }
+
+  .loader svg {
+    display: block;
+    width: clamp(180px, 16vw, 280px);
+    height: auto;
+    fill: var(--fg);
+    animation: logo-in 0.7s ease 0.15s both;
+  }
+}
+
+@keyframes logo-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@keyframes loader-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@media (min-width: 769px) and (prefers-reduced-motion: reduce) {
+  .loader {
+    animation-delay: 0.8s;
+    animation-duration: 0.3s;
+  }
+
+  .loader svg {
+    animation: none;
   }
 }
 
@@ -361,6 +418,14 @@ a:focus-visible {
 </head>
 
 <body id="top">
+
+<div class="loader" aria-hidden="true">
+  <svg viewBox="0 0 226.77 75.59" aria-hidden="true" focusable="false">
+        <path d="M112.53,0L75.66,0c-0.04,0-0.07,0.03-0.07,0.07l0,37.73c0-21.21-17.47-38.33-38.79-37.78C16.17,0.54,0,18.01,0,38.65l0,36.87c0,0.04,0.03,0.07,0.07,0.07l36.33,0l0-37.8l2.8,0l0,37.8l36.33,0c0.04,0,0.07-0.03,0.07-0.07v0c0,0.04,0.03,0.07,0.07,0.07l37.73,0c21.21,0,38.33-17.46,37.78-38.79C150.64,16.17,133.17,0,112.53,0z"/>
+        <circle cx="188.98" cy="37.8" r="37.8"/>
+      </svg>
+</div>
+
 
 <header class="header grid small">
   <a href="#top" class="brand">Nodoubt Office</a>
