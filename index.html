@@ -151,43 +151,43 @@ a:focus-visible {
   fill: currentColor;
 }
 
-/* Load screen: desktop only for now */
+/* Load screen with the logo; the rule sits right under the header */
 
-.loader {
+.hero {
+  padding-top: 0;
+}
+
+.wordmark svg {
   display: none;
 }
 
-@media (min-width: 769px) {
-  /* The logo moves into the load screen; the rule sits right under the header */
-  .hero {
-    padding-top: 0;
-  }
+.hero .rule {
+  margin-top: 0 !important;
+}
 
-  .wordmark svg {
-    display: none;
-  }
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: var(--bg);
+  animation: loader-out 0.6s ease 1.8s forwards;
+}
 
-  .hero .rule {
-    margin-top: 0 !important;
-  }
+.loader svg {
+  display: block;
+  width: clamp(150px, 16vw, 280px);
+  height: auto;
+  fill: var(--fg);
+  animation: logo-in 0.7s ease 0.15s both;
+}
 
-  .loader {
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    display: grid;
-    place-items: center;
-    background: var(--bg);
-    animation: loader-out 0.6s ease 1.8s forwards;
-  }
+/* Mobile menu: hidden on desktop */
 
-  .loader svg {
-    display: block;
-    width: clamp(180px, 16vw, 280px);
-    height: auto;
-    fill: var(--fg);
-    animation: logo-in 0.7s ease 0.15s both;
-  }
+.menu-toggle,
+.mobile-menu {
+  display: none;
 }
 
 @keyframes logo-in {
@@ -204,7 +204,7 @@ a:focus-visible {
   }
 }
 
-@media (min-width: 769px) and (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce) {
   .loader {
     animation-delay: 0.8s;
     animation-duration: 0.3s;
@@ -461,12 +461,84 @@ a:focus-visible {
     font-size: clamp(11.5px, 3.6vw, 14px);
   }
 
-  .brand {
+  .brand,
+  .nav {
     display: none;
   }
 
-  .nav {
-    display: contents;
+  .header {
+    position: relative;
+    z-index: 60;
+    align-items: center;
+  }
+
+  .menu-toggle {
+    grid-column: 1;
+    justify-self: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    width: 44px;
+    height: 44px;
+    margin: -14px 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--fg);
+    cursor: pointer;
+  }
+
+  .menu-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: currentColor;
+    transition: transform 0.2s;
+  }
+
+  .menu-toggle[aria-expanded="true"] span:first-child {
+    transform: translateY(4px) rotate(45deg);
+  }
+
+  .menu-toggle[aria-expanded="true"] span:last-child {
+    transform: translateY(-4px) rotate(-45deg);
+  }
+
+  .menu-toggle:focus-visible {
+    outline: 2px solid var(--fg);
+    outline-offset: 2px;
+  }
+
+  .status {
+    grid-column: 4;
+    justify-self: end;
+  }
+
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    padding: 65px var(--pad) 24px;
+    background: var(--bg);
+    overflow-y: auto;
+  }
+
+  .mobile-menu.is-open {
+    display: block;
+  }
+
+  .mobile-menu a {
+    display: block;
+    padding: 12px 0;
+    border-top: 1px solid var(--line);
+    font-size: 28px;
+    line-height: 1.2;
+    letter-spacing: -0.04em;
+  }
+
+  body.menu-open {
+    overflow: hidden;
   }
 
   .wordmark,
@@ -477,11 +549,6 @@ a:focus-visible {
 
   .services li {
     font-size: 20px;
-  }
-
-  /* Phone: the whole logo runs from the left grid edge to the start of column 3, where Client Login begins */
-  .wordmark svg {
-    width: calc(50% + var(--gutter) / 2);
   }
 
   .contact-links {
@@ -502,6 +569,10 @@ a:focus-visible {
 
 
 <header class="header grid small">
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu">
+    <span></span>
+    <span></span>
+  </button>
   <a href="#top" class="brand">Nodoubt Office</a>
   <nav class="nav" aria-label="Main">
     <a href="#services">Services</a>
@@ -510,6 +581,13 @@ a:focus-visible {
   </nav>
   <span class="status">Available</span>
 </header>
+
+<nav class="mobile-menu" id="mobile-menu" aria-label="Menu">
+  <a href="#top">Nodoubt Office</a>
+  <a href="#services">Services</a>
+  <a href="#contact">Contact</a>
+  <a href="https://termine.nodoubtoffice.com">Client Login</a>
+</nav>
 
 <main>
   <section class="hero grid">
@@ -756,6 +834,39 @@ a:focus-visible {
 
   window.addEventListener("scroll", hide, { passive: true });
   window.addEventListener("resize", hide);
+})();
+</script>
+
+<script>
+(function () {
+  var toggle = document.querySelector(".menu-toggle");
+  var menu = document.getElementById("mobile-menu");
+
+  function setOpen(open) {
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    toggle.setAttribute("aria-label", open ? "Close menu" : "Menu");
+    menu.classList.toggle("is-open", open);
+    document.body.classList.toggle("menu-open", open);
+  }
+
+  toggle.addEventListener("click", function () {
+    setOpen(toggle.getAttribute("aria-expanded") !== "true");
+  });
+
+  menu.querySelectorAll("a").forEach(function (a) {
+    a.addEventListener("click", function () { setOpen(false); });
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && menu.classList.contains("is-open")) {
+      setOpen(false);
+      toggle.focus();
+    }
+  });
+
+  window.matchMedia("(min-width: 769px)").addEventListener("change", function (e) {
+    if (e.matches) setOpen(false);
+  });
 })();
 </script>
 
