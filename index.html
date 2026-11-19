@@ -338,6 +338,21 @@ a:focus-visible {
   padding-bottom: 24px;
 }
 
+/* Desktop: the contact block stays pinned to the bottom of the window */
+@media (min-width: 769px) {
+  main {
+    padding-bottom: var(--section);
+  }
+
+  .contact {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    padding-top: 24px;
+    background: var(--bg);
+  }
+}
+
 .contact-links {
   display: flex;
   flex-direction: column;
